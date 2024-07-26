@@ -80,7 +80,7 @@ export const CardView = () => {
       <h1>Pick Your Card!</h1>
       <p>{randomCard !== null && `${randomCard}`}</p>
       <button onClick={handleDraw}>Draw</button>
-      <p>{message}</p>
+      <p>{randomCard === null ? "" : message}</p>
     </div>
   );
 };
