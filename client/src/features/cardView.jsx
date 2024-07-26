@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Groq from "groq-sdk";
 
-const groq = new Groq({ apiKey: process.env.VITE_GROQ_API_KEY, dangerouslyAllowBrowser: true });
+const groq = new Groq({
+  apiKey: process.env.VITE_GROQ_API_KEY,
+  dangerouslyAllowBrowser: true,
+});
 
 export const CardView = () => {
   const cards = [
@@ -33,15 +36,12 @@ export const CardView = () => {
   // use state is a react hook that allows functional components to have 'state'
   // it returns an array of which its two elements are the current state value and a function that lets you update the state
   // 'CardView' is my functional component in this case
-  console.log("Component rendered");
-  console.log(randomCard, "randomCard");
 
   const [message, setMessage] = useState("");
 
   const handleDraw = () => {
-    // const newRandomNumber = Math.floor(Math.random() * 23);
-    // setRandomNumber(newRandomNumber); //updates the state by calling setRandomNumber with the newRandomNumber
-
+    //finds a random number inbetween zero and length of card array
+    //sets randomCard to the identity of the array index that matches that random number
     const newRandomIndex = Math.floor(Math.random() * cards.length);
     const newRandomCard = cards[newRandomIndex];
     setRandomCard(newRandomCard);
@@ -52,7 +52,8 @@ export const CardView = () => {
       messages: [
         {
           role: "user",
-          content: "You are an immortal, ancient fortune teller who has traveled many places and feels a deep connection to the stars and the universe and all celestial bodies.",
+          content:
+            "You are an immortal, ancient fortune teller who has traveled many places and feels a deep connection to the stars and the universe and all celestial bodies.",
         },
         {
           role: "user",
@@ -70,7 +71,7 @@ export const CardView = () => {
       // Print the completion returned by the LLM.
       console.log(chatCompletion.choices[0]?.message?.content || "");
       setMessage(chatCompletion.choices[0]?.message?.content);
-    };
+    }
 
     tarotReading();
   }, [randomCard]);
