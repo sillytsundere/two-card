@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Groq from "groq-sdk";
 
-// const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+const groq = new Groq({ apiKey: process.env.VITE_GROQ_API_KEY, dangerouslyAllowBrowser: true });
 
 export const CardView = () => {
   const cards = [
@@ -47,33 +47,33 @@ export const CardView = () => {
     setRandomCard(newRandomCard);
   };
 
-  // async function getGroqChatCompletion() {
-  //   return groq.chat.completions.create({
-  //     messages: [
-  //       {
-  //         role: "user",
-  //         content: "You are an immortal, ancient fortune teller who has traveled many places and feels a deep connection to the stars and the universe and all celestial bodies.",
-  //       },
-  //       {
-  //         role: "user",
-  //         content: `For my daily card pull I drew ${randomCard}, please give me a reading.`,
-  //       },
-  //     ],
-  //     model: "llama3-8b-8192",
-  //   });
-  // }
+  async function getGroqChatCompletion() {
+    return groq.chat.completions.create({
+      messages: [
+        {
+          role: "user",
+          content: "You are an immortal, ancient fortune teller who has traveled many places and feels a deep connection to the stars and the universe and all celestial bodies.",
+        },
+        {
+          role: "user",
+          content: `For my daily card pull I drew ${randomCard}, please give me a reading.`,
+        },
+      ],
+      model: "llama3-8b-8192",
+    });
+  }
 
-  // useEffect(() => {
-  //   console.log("useEffect hit");
-  //   async function tarotReading() {
-  //     const chatCompletion = await getGroqChatCompletion();
-  //     // Print the completion returned by the LLM.
-  //     console.log(chatCompletion.choices[0]?.message?.content || "");
-  //     setMessage(chatCompletion.choices[0]?.message?.content);
-  //   };
+  useEffect(() => {
+    console.log("useEffect hit");
+    async function tarotReading() {
+      const chatCompletion = await getGroqChatCompletion();
+      // Print the completion returned by the LLM.
+      console.log(chatCompletion.choices[0]?.message?.content || "");
+      setMessage(chatCompletion.choices[0]?.message?.content);
+    };
 
-  //   tarotReading();
-  // }, [randomCard]);
+    tarotReading();
+  }, [randomCard]);
 
   return (
     <div>
